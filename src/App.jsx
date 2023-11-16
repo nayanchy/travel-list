@@ -14,14 +14,29 @@ function App() {
     };
     setListItems((prevItems) => [...prevItems, newItem]);
   };
+  const packedCount = listItems.filter((item) => item.packed).length;
 
-  const packedCount = listItems.map((item) => item.packed === true).length;
+  const handleDelete = (id) => {
+    return setListItems((prevItems) => {
+      return prevItems.filter((item) => item.id !== id);
+    });
+  };
+
+  const handlePacked = (updatedItem) => {
+    setListItems((prevItems) =>
+      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+  };
 
   return (
     <div className="app">
       <Logo />
       <Form handleData={handleData} />
-      <PackingList items={listItems} />
+      <PackingList
+        items={listItems}
+        onDelete={handleDelete}
+        onTogglePacked={handlePacked}
+      />
       <Stats itemsCount={listItems.length} packedCount={packedCount} />
     </div>
   );
