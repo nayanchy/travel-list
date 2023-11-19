@@ -19,6 +19,7 @@ const Form = ({ handleData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!formData.description) return;
     handleData(formData);
     setFormData({ description: "", quantity: "1", packed: false });
   };

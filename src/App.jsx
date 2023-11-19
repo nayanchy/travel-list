@@ -17,15 +17,20 @@ function App() {
   const packedCount = listItems.filter((item) => item.packed).length;
 
   const handleDelete = (id) => {
-    return setListItems((prevItems) => {
-      return prevItems.filter((item) => item.id !== id);
-    });
+    setListItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
   const handlePacked = (updatedItem) => {
     setListItems((prevItems) =>
       prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
     );
+  };
+
+  const resetListItems = () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to reset your list?"
+    );
+    confirmed && setListItems([]);
   };
 
   return (
@@ -36,6 +41,7 @@ function App() {
         items={listItems}
         onDelete={handleDelete}
         onTogglePacked={handlePacked}
+        clearList={resetListItems}
       />
       <Stats itemsCount={listItems.length} packedCount={packedCount} />
     </div>
